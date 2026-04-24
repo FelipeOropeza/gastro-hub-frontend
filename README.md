@@ -1,75 +1,45 @@
-# Nuxt Minimal Starter
+# GastroHub - Frontend Premium 🍽️
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Uma interface de alta performance e design impactante desenvolvida com **Nuxt 4**, focada na experiência gastronômica e gestão administrativa de restaurantes.
 
-## Setup
+## 🎨 Identidade Visual
+Este projeto utiliza uma estética **Brutalista Editorial Premium**.
+- **Cores:** Vermelho Carmesim (#D91E1E), Preto Carvão (#0F0F0F) e Off-White.
+- **Tipografia:** Foco em escalas tipográficas extremas e contrastantes.
+- **Geometria:** Bordas afiadas (0px) para um visual sofisticado e moderno.
 
-Make sure to install dependencies:
+## 🚀 Tecnologias Utilizadas
+- **Nuxt 4:** Framework Vue progressivo para aplicações robustas.
+- **Tailwind CSS:** Estilização utilitária sem componentes engessados.
+- **Pinia:** Gerenciamento de estado global (Auth e Carrinho).
+- **Axios:** Integração fluida com API REST Spring Boot.
+- **Lucide Vue:** Conjunto de ícones minimalistas.
 
-```bash
-# npm
-npm install
+## 🛠️ Instalação e Execução
 
-# pnpm
-pnpm install
+### Pré-requisitos
+- Node.js (v18+)
+- Backend Spring Boot em execução (porta 8080)
 
-# yarn
-yarn install
+### Configuração
+1. Clone o repositório:
+   ```bash
+   git clone <url-do-repositorio>
+   ```
+2. Instale as dependências:
+   ```bash
+   npm install
+   ```
+3. Inicie o servidor de desenvolvimento:
+   ```bash
+   npm run dev
+   ```
+   Acesse: `http://localhost:3000`
 
-# bun
-bun install
-```
+## 📂 Estrutura do Projeto (Nuxt 4)
+- `app/`: Contém a aplicação principal (pages, layouts, assets).
+- `plugins/`: Configurações de bibliotecas externas (Axios).
+- `stores/`: Estados globais do Pinia.
 
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## 📝 Licença
+Este projeto é para fins educacionais e de demonstração.
