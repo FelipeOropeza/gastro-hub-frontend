@@ -38,7 +38,7 @@
             </span>
             <div class="text-right">
               <p class="text-[10px] uppercase tracking-[0.2em] opacity-60 text-right">Total</p>
-              <p class="text-2xl font-black text-crimson">R$ {{ Number(order.total).toFixed(2) }}</p>
+              <p class="text-2xl font-black text-crimson">R$ {{ Number(order.valorTotal).toFixed(2) }}</p>
             </div>
           </div>
         </div>
@@ -49,8 +49,8 @@
             <h4 class="text-xs uppercase font-black text-gray-400 mb-4 tracking-widest">Itens</h4>
             <ul class="space-y-2">
               <li v-for="item in order.itens" :key="item.id" class="flex justify-between border-b border-gray-100 pb-2">
-                <span class="font-bold uppercase">{{ item.quantidade }}x {{ item.produtoNome }}</span>
-                <span class="font-mono text-gray-500">R$ {{ (Number(item.preco) * item.quantidade).toFixed(2) }}</span>
+                <span class="font-bold uppercase">{{ item.quantidade }}x {{ item.nomeProduto }}</span>
+                <span class="font-mono text-gray-500">R$ {{ (Number(item.precoUnitario) * item.quantidade).toFixed(2) }}</span>
               </li>
             </ul>
           </div>
@@ -61,7 +61,7 @@
               <p><span class="font-bold uppercase">CEP:</span> {{ order.cep }}</p>
               <p><span class="font-bold uppercase">Complemento:</span> {{ order.complemento || 'N/A' }}</p>
               <p><span class="font-bold uppercase">Pagamento:</span> <span class="bg-gray-100 px-2 py-0.5 border border-charcoal/20">{{ order.metodoPagamento }}</span></p>
-              <p><span class="font-bold uppercase">Data:</span> {{ formatDate(order.dataCriacao) }}</p>
+              <p><span class="font-bold uppercase">Data:</span> {{ formatDate(order.data) }}</p>
             </div>
           </div>
         </div>

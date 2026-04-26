@@ -18,16 +18,16 @@ interface NovoPedido {
 export interface Pedido {
   id: number
   status: StatusPedido
-  total: number
+  valorTotal: number
   cep: string
   complemento: string
   metodoPagamento: MetodoPagamento
-  dataCriacao: string
+  data: string
   itens: {
     id: number
     quantidade: number
-    produtoNome: string
-    preco: number
+    nomeProduto: string
+    precoUnitario: number
   }[]
 }
 
