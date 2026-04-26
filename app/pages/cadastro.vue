@@ -70,8 +70,8 @@
   </div>
 </template>
 
-<script setup>
-const { $api } = useNuxtApp()
+<script setup lang="ts">
+const { $api } = useNuxtApp() as any
 
 const form = reactive({
   nome: '',
@@ -92,17 +92,17 @@ async function handleRegister() {
     await $api.post('/usuarios', form)
     success.value = true
     
-    // Pequeno delay para mostrar a mensagem de sucesso antes de redirecionar
     setTimeout(() => {
       navigateTo('/login')
     }, 2000)
     
-  } catch (err) {
-    // Tratamento de erros de validação da API
-    if (Array.isArray(err.response?.data)) {
-      error.value = err.response.data.map(e => e.mensagem).join(', ')
+  } catch (err: unknown) {
+    const e = err as { response?: { data?: { mensagem?: string } | Array<{ mensagem: string }> } }
+    const data = e.response?.data
+    if (Array.isArray(data)) {
+      error.value = data.map((item) => item.mensagem).join(', ')
     } else {
-      error.value = err.response?.data?.mensagem || 'Erro ao realizar cadastro. Tente novamente.'
+      error.value = data?.mensagem ?? 'Erro ao realizar cadastro. Tente novamente.'
     }
   } finally {
     loading.value = false

@@ -55,9 +55,10 @@
   </div>
 </template>
 
-<script setup>
-const { $api } = useNuxtApp()
+<script setup lang="ts">
+const { $api } = useNuxtApp() as any
 const auth = useAuthStore()
+const route = useRoute()
 
 const form = reactive({
   email: '',
@@ -77,14 +78,18 @@ async function handleLogin() {
     
     auth.setAuth(token, user)
     
-    // Redirecionar baseado no tipo
-    if (user.tipo === 'ADMIN') {
+    const redirectPath = route.query.redirect as string | undefined
+    
+    if (redirectPath) {
+      navigateTo(redirectPath)
+    } else if (user.tipo === 'ADMIN') {
       navigateTo('/admin')
     } else {
       navigateTo('/')
     }
-  } catch (err) {
-    error.value = err.response?.data?.mensagem || 'Falha na autenticação. Verifique suas credenciais.'
+  } catch (err: unknown) {
+    const e = err as { response?: { data?: { mensagem?: string } } }
+    error.value = e.response?.data?.mensagem ?? 'Falha na autenticação. Verifique suas credenciais.'
   } finally {
     loading.value = false
   }

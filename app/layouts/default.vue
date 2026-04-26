@@ -8,9 +8,25 @@
           Restaurante
         </NuxtLink>
         
-        <nav class="hidden md:flex items-center gap-8 font-bold text-sm uppercase tracking-widest">
+        <nav class="hidden md:flex items-center gap-6 font-bold text-sm uppercase tracking-widest">
           <NuxtLink to="/" class="hover:text-crimson transition-colors">Cardápio</NuxtLink>
-          <NuxtLink to="/login" class="bg-charcoal text-base px-6 py-3 hover:bg-crimson transition-colors">Login / Pedir</NuxtLink>
+          
+          <!-- Carrinho -->
+          <NuxtLink to="/checkout" class="flex items-center gap-2 border-2 border-charcoal px-4 py-2 hover:bg-charcoal hover:text-white transition-all relative">
+            Carrinho
+            <span v-if="cart.totalItems > 0" class="bg-crimson text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full">
+              {{ cart.totalItems }}
+            </span>
+          </NuxtLink>
+
+          <!-- Autenticação -->
+          <template v-if="auth.isAuthenticated">
+            <NuxtLink to="/pedidos" class="hover:text-crimson transition-colors">Meus Pedidos</NuxtLink>
+            <button @click="auth.logout()" class="text-crimson border-b-2 border-crimson pb-0.5 hover:opacity-70">Sair</button>
+          </template>
+          <NuxtLink v-else to="/login" class="bg-charcoal text-base px-6 py-3 hover:bg-crimson transition-colors">
+            Entrar
+          </NuxtLink>
         </nav>
       </div>
     </header>
@@ -34,3 +50,11 @@
     </footer>
   </div>
 </template>
+
+<script setup lang="ts">
+import { useAuthStore } from '~/stores/auth'
+import { useCartStore } from '~/stores/cart'
+
+const auth = useAuthStore()
+const cart = useCartStore()
+</script>

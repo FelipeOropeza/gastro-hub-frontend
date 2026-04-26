@@ -95,12 +95,15 @@
           
           <div class="flex justify-between items-start mb-2">
             <h3 class="text-2xl font-bold uppercase truncate pr-4">{{ produto.nome }}</h3>
-            <span class="text-crimson font-black text-xl">R$ {{ produto.preco.toFixed(2) }}</span>
+            <span class="text-crimson font-black text-xl">R$ {{ Number(produto.preco).toFixed(2) }}</span>
           </div>
           
           <p class="text-gray-600 text-sm mb-6 line-clamp-2 h-10">{{ produto.descricao }}</p>
           
-          <button class="w-full border-2 border-charcoal py-3 font-bold uppercase tracking-widest group-hover:bg-crimson group-hover:border-crimson group-hover:text-white transition-colors">
+          <button 
+            @click="cart.addItem(produto)"
+            class="w-full border-2 border-charcoal py-3 font-bold uppercase tracking-widest group-hover:bg-crimson group-hover:border-crimson group-hover:text-white transition-colors"
+          >
             Adicionar
           </button>
         </div>
@@ -114,16 +117,33 @@
   </div>
 </template>
 
-<script setup>
-const { $api } = useNuxtApp()
+<script setup lang="ts">
+import { useCartStore } from '~/stores/cart'
 
-const categories = ref([])
-const products = ref([])
+interface Categoria {
+  id: number
+  nome: string
+}
+
+interface Produto {
+  id: number
+  nome: string
+  preco: number
+  descricao?: string
+  categoria?: string
+  idCategoria?: number
+  categoriaId?: number
+}
+
+const { $api } = useNuxtApp() as { $api: ReturnType<typeof import('axios').default.create> }
+const cart = useCartStore()
+
+const categories = ref<Categoria[]>([])
+const products = ref<Produto[]>([])
 const loading = ref(true)
-const selectedCategory = ref(null)
+const selectedCategory = ref<number | null>(null)
 
-// Computed para filtrar produtos client-side por categoria
-const filteredProducts = computed(() => {
+const filteredProducts = computed<Produto[]>(() => {
   if (!selectedCategory.value) return products.value
   return products.value.filter(p => p.idCategoria === selectedCategory.value || p.categoriaId === selectedCategory.value)
 })
@@ -132,11 +152,10 @@ async function fetchData() {
   loading.value = true
   try {
     const [catRes, prodRes] = await Promise.all([
-      $api.get('/categorias'),
-      $api.get('/produtos')
+      ($api as any).get('/categorias'),
+      ($api as any).get('/produtos')
     ])
-    
-    // Spring Data JPA retorna os dados dentro da propriedade 'content'
+
     categories.value = catRes.data.content || []
     products.value = prodRes.data.content || []
   } catch (err) {

@@ -8,5 +8,8 @@ export default defineNuxtConfig({
   ],
   imports: {
     dirs: ['stores']
-  }
+  },
+  devServer: {
+    port: 5173
+  }  
 })
